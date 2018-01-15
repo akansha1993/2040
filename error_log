@@ -1,0 +1,6 @@
+[12-Jan-2018 05:10:15 America/Chicago] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'fabianoa_fabiano'@'localhost' (using password: YES) in /home/healthcare/test.2040healthcare.com/new/admin/includes/config.php on line 12
+[12-Jan-2018 05:10:15 America/Chicago] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/healthcare/test.2040healthcare.com/new/index.php:3) in /home/healthcare/test.2040healthcare.com/new/admin/includes/function.php on line 3
+[12-Jan-2018 05:10:15 America/Chicago] PHP Warning:  mysqli_connect(): (HY000/1045): Access denied for user 'fabianoa_fabiano'@'localhost' (using password: YES) in /home/healthcare/test.2040healthcare.com/new/admin/includes/config.php on line 12
+[12-Jan-2018 05:10:15 America/Chicago] PHP Warning:  mysqli_query() expects parameter 1 to be mysqli, boolean given in /home/healthcare/test.2040healthcare.com/new/admin/includes/function.php on line 25
+[12-Jan-2018 05:10:15 America/Chicago] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/healthcare/test.2040healthcare.com/new/admin/includes/function.php on line 26
+[12-Jan-2018 05:10:15 America/Chicago] PHP Fatal error:  Call to undefined function url() in /home/healthcare/test.2040healthcare.com/new/includes/header.php on line 155

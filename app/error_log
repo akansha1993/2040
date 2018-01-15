@@ -1,0 +1,24 @@
+
+[23-Aug-2017 19:12:22 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[23-Aug-2017 20:19:22 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[23-Aug-2017 20:19:23 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[23-Aug-2017 20:30:10 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 12:14:09 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 12:14:10 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 12:20:10 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 12:23:57 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 12:27:04 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 12:32:17 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 12:49:44 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 12:51:37 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 12:53:42 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 15:51:05 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 16:02:33 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[24-Aug-2017 16:02:34 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[25-Aug-2017 00:49:24 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[25-Aug-2017 00:49:25 Asia/Kolkata] PHP Warning:  mysqli_fetch_array() expects parameter 1 to be mysqli_result, null given in /home/fabianoappliance/public_html/admin/includes/function.php on line 1912
+[27-Dec-2017 00:16:40 America/Chicago] PHP Fatal error:  Call to undefined method GFHAdmin::getproduct_byname() in /home/healthcare/test.2040healthcare.com/app/search.php on line 10
+[27-Dec-2017 00:18:23 America/Chicago] PHP Fatal error:  Call to undefined method GFHAdmin::getproduct_byname() in /home/healthcare/test.2040healthcare.com/app/search.php on line 10
+[27-Dec-2017 01:44:14 America/Chicago] PHP Fatal error:  Call to undefined method GFHAdmin::getproduct_byname() in /home/healthcare/test.2040healthcare.com/app/search.php on line 10
+[27-Dec-2017 01:44:24 America/Chicago] PHP Fatal error:  Call to undefined method GFHAdmin::getproduct_byname() in /home/healthcare/test.2040healthcare.com/app/search.php on line 10
+[27-Dec-2017 01:46:38 America/Chicago] PHP Fatal error:  Call to undefined method GFHAdmin::getproduct_byname() in /home/healthcare/test.2040healthcare.com/app/search.php on line 10
