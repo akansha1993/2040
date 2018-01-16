@@ -1,7 +1,4 @@
-
-
 <?php
-
 /**
  * Created by PhpStorm.
  * User: uksca
@@ -27,10 +24,11 @@ if(isset($_POST['cart'])) {
             if(in_array($_POST['cart'], array_column($_SESSION['cart_item'], 'product_id'))) { // search value in the array
 
                 foreach ($_SESSION['cart_item'] as $k => $v){
-                   if($_SESSION['cart_item'][$k]['product_id'] == $_POST['cart'] && $_SESSION['cart_item'][$k]['size']==$_POST['size']){
-                    $_SESSION['cart_item'][$k]['quantity']+=$_POST['quantity'];
+                   if($_SESSION['cart_item'][$k]['product_id'] == $_POST['cart']){
                     $_SESSION['cart_item'][$k]['size']=$_POST['size'];
-                       $_SESSION['cart_item'][$k]['price']+=$_SESSION['cart_item'][$k]['price'];
+                    $_SESSION['cart_item'][$k]['quantity']=$_POST['quantity'];
+                    $_SESSION['cart_item'][$k]['size']=$_POST['size'];
+                    $_SESSION['cart_item'][$k]['price']=$_SESSION['cart_item'][$k]['price'];
                 }
             }
 

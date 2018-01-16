@@ -105,7 +105,7 @@ $na=mysqli_fetch_array($sql);
 						 
 							<button type="submit" class="_winkls-cart" onclick="addtocart(<?php echo $na['prod_id'];?>);" ><i class="fa fa-cart-plus" aria-hidden="true"></i> Add to cart</button>
 					
-						<button  onclick="location.href='cart.php'" class="_winkls-cart _winkls-cart-like"><i class="fa fa-heart-o" aria-hidden="true"></i> Buy Now</button>
+						<button  onclick="addtocart(<?php echo $na['prod_id'];?>, true);" class="_winkls-cart _winkls-cart-like"><i class="fa fa-heart-o" aria-hidden="true"></i> Buy Now</button>
 					</div>
 				   <div class="clearfix"> </div>  
 				</div>
@@ -280,13 +280,21 @@ $na=mysqli_fetch_array($sql);
 	<!-- //footer-top -->  
 	<!-- subscribe -->
 <script>
-	 function addtocart(pid) {
-	 	var quantity=document.getElementByID('prod_quantity').value;
+	 function addtocart(pid, bool = false) {
+		 var quantity=document.getElementById('prod_quantity').value;
+		 var size_ele = document.querySelector('input[name = "size"]:checked');
+		 var size = 0;
+		 if(size_ele != undefined){
+			 size = size_ele.value;
+		 }
 	 	       $.ajax({
                 type: 'post',
                 url: 'updatecart.php',
-                data: {cart: pid,quantity: quantity},
+                data: {cart: pid,quantity: quantity, size: size},
                 success: function (result) {
+					if(bool)
+					location.href='cart.php';
+					else
                 	$("#cart_count").html(result);
                 }
             });
