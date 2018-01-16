@@ -820,6 +820,17 @@ public function deletefaq($value='')
         }
         return mysqli_query(GFHConfig::$link, $sql);
     }
+    //service
+    public function getservice($service_id = "")
+    {
+        $sql = "select * from service ";
+        if (isset($service_id) && !empty($service_id)) {
+            $sql .= " where service_id='$service_id'";
+        } else {
+            $sql .= "where status='1'";
+        }
+        return mysqli_query(GFHConfig::$link, $sql);
+    }
 
     public function banner($banner_id = '')
     {
@@ -904,7 +915,73 @@ public function deletefaq($value='')
 
         }
     }
+//service
+    public function service($service_id = '')
+    {
+        if (!empty($_POST['status'])) {
 
+            $name = isset($_POST['name']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['name']) : '';
+            $caption = isset($_POST['caption']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['caption']) : '';
+            $status = $_POST['status'];
+            if (!empty($service_id)) {
+                $allowedExts = array("jpg", "jpeg", "gif", "png");
+                $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                if ($_FILES['image']['name'] != "") {
+                    if (in_array($extension, $allowedExts)) {
+                        $date = new DateTime();
+                        $timestamp = $date->format('U');
+                        $img = $timestamp . "." . $extension;
+                        $na = mysqli_fetch_array($this->getservice($service_id));
+                        unlink("../images/service/" . $na['image']);
+
+
+                        $sql = "UPDATE `service` SET `headline`='$name', `caption`='$caption', `image`='$img',`status`='$status' WHERE `service_id`='$service_id'";
+                        $result = mysqli_query(GFHConfig::$link, $sql);
+                        if ($result) {
+                            echo "<script>window.location='manage-services.php?msg=Updated successfully';</script>";
+                        } else {
+                            echo "<script>window.location='manage-services.php?msg=Not Updated';</script>";
+                        }
+                        move_uploaded_file($_FILES['image']['tmp_name'], "../images/service/" . $img);
+                    }
+                } else {
+                    $sql = "UPDATE `service` SET `headline`='$name', `caption`='$caption', `status`='$status' WHERE `service_id`='$service_id'";
+                    $result = mysqli_query(GFHConfig::$link, $sql);
+                    if ($result) {
+                        echo "<script>window.location='manage-services.php?msg=Updated successfully';</script>";
+                    } else {
+                        echo "<script>window.location='manage-services.php?msg=Not Updated';</script>";
+                    }
+                }
+            } else {
+                $allowedExts = array("jpg", "jpeg", "gif", "png");
+                $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+
+                if ($_FILES['image']['name'] != "") {
+                    if (in_array($extension, $allowedExts)) {
+                        $date = new DateTime();
+                        $timestamp = $date->format('U');
+                        $img = $timestamp . "." . $extension;
+                        $sql = "INSERT INTO `service`(`headline`, `caption`,`status`,`image`) VALUES('$name','$caption','$status','$img')";
+                        $result = mysqli_query(GFHConfig::$link, $sql);
+                        if (!$result) {
+                            printf("Error: %s\n", mysqli_error(GFHConfig::$link));
+                            exit();
+                        }
+                        move_uploaded_file($_FILES['image']['tmp_name'], "../images/service/" . $img);
+                        if ($result) {
+                            echo "<script>window.location='manage-services.php?msg=Added successfully';</script>";
+                        } else {
+                            echo "<script>window.location='manage-services.php?msg=Not Updated';</script>";
+
+                        }
+                    }
+
+
+                }
+            }
+        }
+    }
     public function getofferbanner($banner_id = "")
     {
         $sql = "select * from offers_banner ";
@@ -1240,6 +1317,24 @@ $na=mysqli_fetch_array($sql);
 
         }
     }
+    // top product update product quantity
+    public function update_topproductquantity()
+    {
+        $product_id = mysqli_real_escape_string(GFHConfig::$link, $_POST['product_id']);
+        $product_quantity = mysqli_real_escape_string(GFHConfig::$link, $_POST['product_quantity']);
+        $pr = $this->getproduct($product_id);
+        $prod = mysqli_fetch_array($pr);
+        $amount = $prod['prod_price'];
+        $sl = mysqli_query(GFHConfig::$link, "INSERT INTO `purchase_inventory` SET `top_product_id`='$product_id',`quantity`='$product_quantity',`amount`='$amount'");
+        $sql = "UPDATE `top_product` SET `quantity`='$product_quantity',`last_updated`=NOW() WHERE `prod_id`='$product_id'";
+        $result = mysqli_query(GFHConfig::$link, $sql);
+        if ($result) {
+            echo "<script>window.location='manage-top-products.php?msg=Updated successfully';</script>";
+        } else {
+            echo "<script>window.location='manage-top-products.php?msg=Not Updated';</script>";
+
+        }
+    }
 
     //product
     public function product($product_id = "")
@@ -1384,7 +1479,147 @@ VALUES('$category_id','$subcategory_id','$discount_id','$name','$prod_price','$p
     }
 
 
+//top product
+    public function topproduct($product_id = "")
+    {
+        if (!empty($_POST['name'])) {
 
+            $name = isset($_POST['name']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['name']) : '';
+            $pramotion = isset($_POST['pramotion']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['pramotion']) : '0';
+            $prate = isset($_POST['prate']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['prate']) : '';
+            $mrate = isset($_POST['mrate']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['mrate']) : '';
+            $category_id = isset($_POST['category_id']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['category_id']) : '';
+            $size_id = isset($_POST['size_id']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['size_id']) : '';
+            $subcategory_id = isset($_POST['category_id']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['subcategory_id']) : '';
+            $discount_id = mysqli_real_escape_string(GFHConfig::$link, $_POST['discount_id']);
+            $brand_id = isset($_POST['brand_id']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['brand_id']) : '';
+            $shipping = isset($_POST['shipping']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['shipping']) : '';
+            $prod_price = isset($_POST['prod_price']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['prod_price']) : '';
+            $prod_description = isset($_POST['prod_description']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['prod_description']) : '';
+            $prod_specification = isset($_POST['prod_specification']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['prod_specification']) : '';
+            $prod_features = isset($_POST['prod_features']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['prod_features']) : '';
+            $prod_disclamer = isset($_POST['prod_disclamer']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['prod_disclamer']) : '';
+            $product_images = 0;
+            $prod_features = isset($_POST['prod_features']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['prod_features']) : '';
+            $hsn_code = isset($_POST['hsn_code']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['hsn_code']) : '';
+            $gst = isset($_POST['gst']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['gst']) : '';
+            $tg = $_POST['tags'];
+            $tags = implode("' ',' '", $tg);
+            $prod_status = isset($_POST['prod_status']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['prod_status']) : '';
+
+            if (!empty($product_id)) {
+
+                $nap = array();
+                if ($_FILES['image']['name'] != "" && $_FILES['thumb']['name']!= "") {
+                    $allowedExts = array("jpg", "jpeg", "gif", "png");
+
+                    $extension1 = strtolower(pathinfo($_FILES["thumb"]["name"], PATHINFO_EXTENSION));
+                    $image_tmp1 = $_FILES["thumb"]["tmp_name"];
+                    if (in_array($extension1, $allowedExts)) {
+                        $date = new DateTime();
+                        $timestamp = $date->format('U');
+                        $product_thumb =$timestamp . "." . $extension1;
+                        move_uploaded_file($image_tmp1, "../images/topproduct/" . $product_thumb);
+                    }
+                    // $nap1=serialize($nap);
+                    $i = 88;
+                    foreach ($_FILES["image"]["tmp_name"] as $key => $tmp_name) {
+                        $extension = strtolower(pathinfo($_FILES["image"]["name"][$key], PATHINFO_EXTENSION));
+                        $image = $_FILES["image"]["name"][$key];
+                        $image_tmp = $_FILES["image"]["tmp_name"][$key];
+                        if (in_array($extension, $allowedExts)) {
+                            $date = new DateTime();
+                            $timestamp = $date->format('U');
+                            $product_images = $i++ . $timestamp . "." . $extension;
+                            $nap[] .= $product_images;
+                            move_uploaded_file($image_tmp, "../images/topproduct/" . $product_images);
+                        }
+                        // $nap1=serialize($nap);
+
+                    }
+                }
+                $pro_img = implode(",", $nap);
+                if (!empty($pro_img) && !empty($product_thumb)) {
+                    $sql = "UPDATE top_product SET category_id='$category_id', subcategory_id='$subcategory_id',size_id='$size_id', discount_id='$discount_id', 
+prod_name='$name', prod_price='$prod_price', prod_description='$prod_description', prod_specification='$prod_specification', prod_features='$prod_features', prod_disclamer='$prod_disclamer', 
+product_images='$pro_img',`thumb`='$product_thumb', tags='$tags', prod_status ='$prod_status', brand_id='$brand_id', shipping='$shipping', pramotion='$pramotion', prate='$prate', mrate='$mrate', hsn_code='$hsn_code', gst='$gst' WHERE prod_id='$product_id'";
+                }
+
+                else {
+                    $sql = "UPDATE top_product SET category_id='$category_id', subcategory_id='$subcategory_id',size_id='$size_id', discount_id='$discount_id', 
+prod_name='$name', prod_price='$prod_price', prod_description='$prod_description', prod_specification='$prod_specification',
+ prod_features='$prod_features', prod_disclamer='$prod_disclamer', tags='$tags', prod_status ='$prod_status', brand_id='$brand_id', 
+ shipping='$shipping', pramotion='$pramotion', prate='$prate', mrate='$mrate', hsn_code='$hsn_code', gst='$gst' WHERE prod_id='$product_id'";
+                }
+                $result = mysqli_query(GFHConfig::$link, $sql);
+                /*    if (!$result) {
+                        printf("Error: %s\n", mysqli_error(GFHConfig::$link));
+                        exit();
+                    }*/
+
+                if ($result) {
+                    echo "<script>window.location='manage-top-products.php?msg=Updated successfully';</script>";
+                } else {
+                    echo "<script>window.location='manage-top-products.php?msg=Not Updated';</script>";
+
+                }
+
+            }
+
+
+            else {
+                $check = mysqli_query(GFHConfig::$link, "select * from top_product where prod_name='$name'");
+                if (mysqli_num_rows($check) > 0) {
+                    echo "<script>window.location='manage-top-products?error=product name already exist';</script>";
+                } else {
+                    $nap = array();
+                    if ($_FILES['image']['name'] != "" && $_FILES['thumb']['name']!= "") {
+                        $allowedExts = array("jpg", "jpeg", "gif", "png");
+
+                        $extension1 = strtolower(pathinfo($_FILES["thumb"]["name"], PATHINFO_EXTENSION));
+                        $image_tmp1 = $_FILES["thumb"]["tmp_name"];
+                        if (in_array($extension1, $allowedExts)) {
+                            $date = new DateTime();
+                            $timestamp = $date->format('U');
+                            $product_thumb =$timestamp . "." . $extension1;
+                            move_uploaded_file($image_tmp1, "../images/topproduct/" . $product_thumb);
+                        }
+                        $i = 88;
+                        foreach ($_FILES["image"]["tmp_name"] as $key => $tmp_name) {
+                            $extension = strtolower(pathinfo($_FILES["image"]["name"][$key], PATHINFO_EXTENSION));
+                            $image = $_FILES["image"]["name"][$key];
+                            $image_tmp = $_FILES["image"]["tmp_name"][$key];
+                            if (in_array($extension, $allowedExts)) {
+                                $date = new DateTime();
+                                $timestamp = $date->format('U');
+                                $product_images = $i++ . $timestamp . "." . $extension;
+                                $nap[] .= $product_images;
+                                move_uploaded_file($image_tmp, "../images/topproduct/" . $product_images);
+                            }
+
+
+                        }
+                        $pro_img = implode(",", $nap);
+                    }
+
+                    $sql = "INSERT INTO top_product(category_id, subcategory_id, discount_id, prod_name, prod_price, prod_description, prod_specification, prod_features, prod_disclamer, product_images,thumb, tags, prod_status,brand_id,shipping,pramotion,prate,mrate,hsn_code,gst,size_id) 
+VALUES('$category_id','$subcategory_id','$discount_id','$name','$prod_price','$prod_description','$prod_specification','$prod_features','$prod_disclamer','$pro_img','$product_thumb','$tags','$prod_status','$brand_id','$shipping','$pramotion','$prate','$mrate','$hsn_code','$gst','$size_id')";
+                    $result = mysqli_query(GFHConfig::$link, $sql);
+                    if (!$result) {
+                        printf("Error: %s\n", mysqli_error(GFHConfig::$link));
+                        exit();
+                    }
+
+                    if ($result) {
+                        echo "<script>window.location='manage-top-products.php?msg=Added successfully';</script>";
+                    } else {
+                        echo "<script>window.location='manage-top-products.php?msg=Not Updated';</script>";
+
+                    }
+                }
+            }
+        }
+    }
 
     public function getproduct($discount = "")
     {
@@ -1396,10 +1631,30 @@ VALUES('$category_id','$subcategory_id','$discount_id','$name','$prod_price','$p
         }
         return mysqli_query(GFHConfig::$link, $sql);
     }
+    //top product
+    public function gettopproduct($discount = "")
+    {
+        $sql = "select * from top_product ";
+        if (isset($discount) && !empty($discount)) {
+            $sql .= " where prod_id='$discount'";
+        } else {
+            $sql .= " where prod_status='1'";
+        }
+        return mysqli_query(GFHConfig::$link, $sql);
+    }
 
     public function getallproduct($discount = "")
     {
         $sql = "select * from product ";
+        if (isset($discount) && !empty($discount)) {
+            $sql .= " where prod_id='$discount'";
+        }
+        return mysqli_query(GFHConfig::$link, $sql);
+    }
+    //top product all
+    public function getalltopproduct($discount = "")
+    {
+        $sql = "select * from top_product ";
         if (isset($discount) && !empty($discount)) {
             $sql .= " where prod_id='$discount'";
         }
@@ -1468,7 +1723,11 @@ VALUES('$category_id','$subcategory_id','$discount_id','$name','$prod_price','$p
         $sql = "SELECT * FROM `product` WHERE `pramotion`='1' ORDER BY RAND() limit $limit";
         return mysqli_query(GFHConfig::$link, $sql);
     }
-
+ public function gettopproductrandom($limit = "")
+    {
+        $sql = "SELECT * FROM `top_product` WHERE `prod_status`='1' ORDER BY RAND() limit $limit";
+        return mysqli_query(GFHConfig::$link, $sql);
+    }
 
     public function deleteproduct($discount)
     {
@@ -1477,6 +1736,17 @@ VALUES('$category_id','$subcategory_id','$discount_id','$name','$prod_price','$p
             echo "<script>window.location='manage-product.php?msg=Deleted successfully';</script>";
         } else {
             echo "<script>window.location='manage-product.php?msg=Error While Deleting';</script>";
+
+        }
+    }
+    //top product delete
+    public function deletetopproduct($discount)
+    {
+        $sql = mysqli_query(GFHConfig::$link, "DELETE FROM top_product WHERE prod_id='$discount'");
+        if ($sql) {
+            echo "<script>window.location='manage-top-products.php?msg=Deleted successfully';</script>";
+        } else {
+            echo "<script>window.location='manage-top-products.php?msg=Error While Deleting';</script>";
 
         }
     }

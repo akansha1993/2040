@@ -107,21 +107,21 @@ while ($na=mysqli_fetch_array($sql)) {?>
                   <div class="clearfix"> </div>
                   <div id="service_column">
                      <h1 style="text-align: left;
-                        padding-bottom: 20px;">Top Products<a class="see" href="products1.php">see more</a></h1>
+                        padding-bottom: 20px;">Top Products<a class="see" href="<?php echo url('products1.php?topproduct=top');?>">see more</a></h1>
                   </div>
                   <div id="myTabContent" class="tab-content">
                      <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
                         <div class="tabcontent-grids">
                            <div id="owl-demo" class="owl-carousel">
-                              <?php $top=$GFH_Admin->getrendomproduct(10);
+                              <?php $top=$GFH_Admin->gettopproductrandom(10);
                               while($na=mysqli_fetch_array($top)){?>
                               
                               <div class="item">
-                                 <img class="img-responsive" src="<?php echo url('images/product/'.$na['thumb']); ?>" alt="img">
+                                 <img class="img-responsive" src="<?php echo url('images/topproduct/'.$na['thumb']); ?>" alt="img" style="height: 150px">
                                  <p><?php echo $na['prod_name'];?></p>
-                                 <div class="price"><i class="fa fa-inr"></i>500 </div>
+                                 <div class="price"><i class="fa fa-inr"></i><?php echo $na['prod_price'];?> </div>
                                  <div class="overlay">
-                                    <div class="button"><a class="view-button" href="<?php echo url('product-overview.php?product='.$na['prod_id']);?>">View</a></div>
+                                    <div class="button"><a class="view-button" href="<?php echo url('top-product-overview.php?topproduct='.$na['prod_id']);?>">View</a></div>
                                  </div>
                               </div>
                               <?php } ?>
@@ -177,7 +177,7 @@ while ($na=mysqli_fetch_array($sql)) {?>
                               <div class="item">
                                  <img class="img-responsive" src="<?php echo url('images/product/'.$na['thumb']); ?>" alt="img">
                                  <p><?php echo $na['prod_name'];?></p>
-                                 <div class="price"><i class="fa fa-inr"></i>500 </div>
+                                 <div class="price"><i class="fa fa-inr"></i><?php echo $na['prod_price'];?> </div>
                                  <div class="overlay">
                                     <div class="button"><a class="view-button" href="<?php echo url('product-overview.php?product='.$na['prod_id']);?>">View</a></div>
                                  </div>
@@ -224,13 +224,16 @@ while ($na=mysqli_fetch_array($sql)) {?>
    <div class="container">
       <h3 class="_winkls-title">Services </h3>
       <div class="deals-row">
+         <?php $services=$GFH_Admin->getservice();
+                              while($fetch_services=mysqli_fetch_array($services)){?>
          <div class="col-md-3 focus-grid _winkfocus-grid-mdl">
-            <a href="description.php" class="wthree-btn wthree">
+            <a href="description.php?service=<?php echo $fetch_services['service_id']?>" class="wthree-btn wthree">
                <div class="focus-image"><i class="fa fa-plus-square"></i></div>
-               <h4 class="clrchg">Physio Therapy</h4>
+               <h4 class="clrchg"><?php echo $fetch_services['headline'];?></h4>
             </a>
          </div>
-         <div class="col-md-3 focus-grid _winkfocus-grid-mdl">
+         <?php } ?>
+         <!-- <div class="col-md-3 focus-grid _winkfocus-grid-mdl">
             <a href="description.php" class="wthree-btn wthree5">
                <div class="focus-image"><i class="fa fa-medkit"></i></div>
                <h4 class="clrchg">Pathology</h4>
@@ -247,7 +250,7 @@ while ($na=mysqli_fetch_array($sql)) {?>
                <div class="focus-image"><i class="fa fa-stethoscope"></i></div>
                <h4 class="clrchg">Service 4</h4>
             </a>
-         </div>
+         </div> -->
          <div class="clearfix"> </div>
       </div>
    </div>

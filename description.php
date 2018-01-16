@@ -1,8 +1,11 @@
-<?php include('includes/header.php'); ?> 	
+<?php include('includes/header.php'); 
+$sql=$GFH_Admin->getservice($_GET['service']);
+$na=mysqli_fetch_array($sql);
+?> 	
 	<!-- card-page -->
 	<div class="card-page">
 		<div class="container"> 
-			<h3 class="_winklsls-title _winklsls-title1 text-center">  Physio Therapy</h3>
+			<h3 class="_winklsls-title _winklsls-title1 text-center">  <?php echo isset($na['headline'])?$na['headline']:''?></h3>
 			<hr>  
 			<!-- <div class="agile-card-top">
 				<div class="col-md-4 card-top-grids">
@@ -22,12 +25,11 @@
 				</div>
 				<div class="clearfix"> </div>
 			</div> -->
-			<img src="assets/images/medical-banner-1.jpg">
+			<img src="images/service/<?php echo isset($na['image'])?$na['image']:''?>" style="
+    width: 1141px;
+">
 			<div class="agile-card-text">
-				<h5>New User Account Offers</h5>
-				<p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas faucibus ipsum et libero euismod iaculis. Integer consectetur congue laoreet. Morbi eget leo elementum, vulputate eros et, egestas diam. Nam egestas, quam id viverra congue, elit mi eleifend libero, eget vulputate ante lorem vel quam. Sed suscipit ligula eu mi bibendum, vel mollis enim finibus. Suspendisse vitae est tortor. Donec aliquet leo vitae ligula mattis, vitae auctor mi pellentesque. Integer eu dui accumsan, convallis neque id, malesuada urna. </p>
-				<h5>Special account openings</h5>
-				<p>Nulla sodales nulla et ipsum pharetra pharetra. Suspendisse potenti. Phasellus cursus vehicula lorem, nec dignissim orci cursus tempor. Suspendisse vel ullamcorper arcu. Mauris tellus augue, tristique ut varius ac, scelerisque ac urna. Mauris nibh ligula, cursus eu vehicula a, scelerisque a nunc. Mauris sit amet sem orci. Proin sit amet tortor non massa tincidunt faucibus. Sed a lacus a purus congue dignissim. Maecenas auctor urna et ullamcorper sagittis. Aenean semper, nisi sed vulputate euismod, justo odio dictum lorem, a mattis ipsum magna non quam.<br>  Maecenas faucibus ipsum et libero euismod iaculis. Integer consectetur congue laoreet. Morbi eget leo elementum, vulputate eros et, egestas diam. Nam egestas, quam id viverra congue, elit mi eleifend libero, eget vulputate ante lorem vel quam. Sed suscipit ligula eu mi bibendum, vel mollis enim finibus. Suspendisse vitae est tortor. Donec aliquet leo vitae ligula mattis, vitae auctor mi pellentesque. Integer eu dui accumsan, convallis neque id, malesuada urna. </p>
+				<?php echo isset($na['caption'])?$na['caption']:''?>
 			</div>
 		</div>
 	</div>

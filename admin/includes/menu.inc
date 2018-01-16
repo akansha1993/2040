@@ -42,6 +42,7 @@
                             <li><a href="category.php"><span class="title">Manage Category</span></a></li>
                             <li><a href="manage-subcategory.php"><span class="title">Manage Subcategory</span></a></li>
                             <li><a href="manage-product.php"><span class="title">Product</span></a></li>
+                            <li><a href="manage-top-products.php"><span class="title">Top Product</span></a></li>
                             <li><a href="Upload-bulk-product.php"><span class="title">Upload Bulk Product</span></a></li>
                             <li><a href="manage-brand.php"><span class="title">Brand</span></a></li>
                              <li><a href="manage-sizecategory.php"><span class="title">Size Category</span></a></li>
@@ -75,7 +76,17 @@
 
                         </ul>
                     </li>
-
+                    <li class="gui-folder">
+                        <a>
+                            <div class="gui-icon"><i class="fa fa-database"></i></div>
+                            <span class="title"> Service's </span>
+                        </a>
+                        <ul style="">
+                            <li class="gui-folder">
+                            <li><a href="manage-services.php"><span class="title">Manage Services</span></a></li>
+                            
+                        </ul>
+                    </li>
                     <li class="gui-folder">
                         <a>
                             <div class="gui-icon"><i class="fa fa-archive"></i></div>

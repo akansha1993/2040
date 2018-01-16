@@ -44,24 +44,24 @@ require_once('includes/function.php');
                         <div class="card card-underline">
                             <div class="card-head">
                                 <ul class="nav nav-tabs pull-right" data-toggle="tabs">
-                                    <li class=" <?php if(empty($_GET['q'])){ echo 'active';}?>"><a href="#first2">Products</a></li>
-                                    <li class="<?php if(!empty($_GET['q'])){ echo 'active';}?>"><a href="#second2"><?php if(empty($_GET['q'])){ echo'Add Product';} else{echo'Edit Product';}?> </a></li>
+                                    <li class=" <?php if(empty($_GET['q'])){ echo 'active';}?>"><a href="#first2">Top Products</a></li>
+                                    <li class="<?php if(!empty($_GET['q'])){ echo 'active';}?>"><a href="#second2"><?php if(empty($_GET['q'])){ echo'Add Top Product';} else{echo'Edit Top Product';}?> </a></li>
                                </ul>
-                                <header><?php if(empty($_GET['q'])){ echo'Products';} else{echo'Edit Product';}?> </header>
+                                <header><?php if(empty($_GET['q'])){ echo'Top Products';} else{echo'Edit Top Product';}?> </header>
                             </div>
-                            <div class="card-body tab-content">
+                            <div class="card-body tab-content"> 
                                 <div class="tab-pane <?php if(empty($_GET['q'])){ echo 'active';}?>" id="first2">
                                     <div class="table-responsive">
                                         <?php if(isset($_POST['product_id']) && !empty($_POST['product_id'])){
-                                            $GFH_Admin->update_productquantity();
+                                            $GFH_Admin->update_topproductquantity();
                                         }
                                         if(isset($_POST['name'])){
-                                            $GFH_Admin->product(isset($_GET['q'])?$_GET['q']:'');
+                                            $GFH_Admin->topproduct(isset($_GET['q'])?$_GET['q']:'');
                                         }
 
                                         if(isset($_GET['delete']))
                                         {
-                                            $GFH_Admin->deleteproduct($_GET['delete']);
+                                            $GFH_Admin->deletetopproduct($_GET['delete']);
                                         }?>
                                         <table id="example" class="table order-column hover">
                                         <thead>
@@ -81,7 +81,7 @@ require_once('includes/function.php');
                                         </thead>
                                         <tbody>
                                         <?php $i=1;
-                                        $sql1= $GFH_Admin->getallproduct();
+                                        $sql1= $GFH_Admin->getalltopproduct();
                                        while( $na=mysqli_fetch_array($sql1)){?>
                                         <tr class="gradeX <?php if($na['quantity']<= 11){echo "style-danger";}?>">
                                             <td><?php echo $i;?></td>
@@ -94,7 +94,7 @@ require_once('includes/function.php');
                                             echo "Inactive";
                                                 }?></td>
 
-                                            <td><img style="width:50px;" src="../images/product/<?php  echo $na['thumb'];?>"></td>
+                                            <td><img style="width:50px;" src="../images/topproduct/<?php  echo $na['thumb'];?>"></td>
                                             <td><?php echo date("d-m-Y",strtotime($na['created_on']));?></td>
 
                                             <td>
@@ -121,7 +121,7 @@ require_once('includes/function.php');
                                 <div class="tab-pane <?php if(!empty($_GET['q'])){ echo 'active';}?>" id="second2">
                                     <form method="post" class="form form-validate floating-label" enctype="multipart/form-data">
                                         <?php if(isset($_GET['q'])){
-                                            $sl=$GFH_Admin->getproduct($_GET['q']);
+                                            $sl=$GFH_Admin->gettopproduct($_GET['q']);
                                             $naa=mysqli_fetch_array($sl);
                                         }?>
                                         <div class="row">
@@ -175,15 +175,13 @@ require_once('includes/function.php');
                                                    <label for="select1">Size Category</label>
                                                </div>
                                            </div>
-
                                             <div class="col-md-3">
                                                 <div class="form-group floating-label">
                                                     <select id="subcategory_id" name="subcategory_id" class="form-control" required="" aria-required="true">
-
                                                         <?php if(!empty($naa['subcategory_id'])){
                                                             $subca=$GFH_Admin->getsubCategory($naa['subcategory_id']);
                                                             while($subcat=mysqli_fetch_array($subca)){
-                                                                ?>
+                                                                print_r($subcat);?>
                                                             <option value="<?php echo $subcat['subcategory_id']?>" <?php if($naa['subcategory_id']== $subcat['subcategory_id']){ echo 'selected'; }?>><?php echo $subcat['subcategory_name'];?></option>
                                                         <?php } }?>
                                                     </select>
@@ -194,7 +192,6 @@ require_once('includes/function.php');
                                                 <div class="form-group">
                                                     <select id="discount_id" name="discount_id" class="form-control"
                                                             aria-required="true">
-
                                                         <option value="">None</option>
                                                         <?php $sql=$GFH_Admin->getdiscount();
                                                         while($dis=mysqli_fetch_array($sql)){?>

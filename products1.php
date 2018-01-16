@@ -1,5 +1,11 @@
 
-<?php include('includes/header.php'); ?> 
+<?php include('includes/header.php'); 
+if(isset($_GET['topproduct']))
+{
+$sql=$GFH_Admin->gettopproductrandom(10);
+
+}
+?> 
 
 
 	<!-- products -->
@@ -37,6 +43,9 @@
 					</ul> 
 					<div class="clearfix"> </div>
 				</div>
+				<?php
+				while($na=mysqli_fetch_array($sql))
+					{?>
 				<div class="products-row" style="height: 290px;">
 					<div class="col-md-3 product-grids"> 
 						<!-- <button type="button" class="btn btn-primary">On OFfer</button> -->
@@ -48,25 +57,18 @@
 	
 					<div class="col-md-5 product-grids">
 						<div class="product-spec">
-							<h4><a href="">Apple Iphone 6(Space Gray)</a></h4>
+							<h4><a href=""><?php echo isset($na['prod_name'])?$na['prod_name']:''?></a></h4>
 							<div class="star">
 								 <button type="button" class="btn btn-primary" style="padding: 0 !important;margin-top: 5px;">4.4 &nbsp;<i class="fa fa-star" aria-hidden="true"></i></button>&nbsp;<p style="padding-left: 50px;padding-top: -11px;margin-top: -19px;font-size: 11px;font-weight: bold;">29440 Ratings & 4031 Reviews</p>
 							</div>
 
-							<ul style="padding-left: 17px;padding-top: 6px; list-style: none;">
-								<li><a href="">32 GB ROM</a></li>
-								<li><a href="">4.7 inch Ratina inch Display</a></li>
-								<li><a href="">8MP rear Camera/2MP front Camera</a></li>
-								<li><a href="">LI-on Battery</a></li>
-								<li><a href="">Apple A8 64-bit processor and M8 Motion Co-processor</a></li>
-								<li><a href="">Brand Warranty of 1 Year</a></li>
-							</ul>
+							<?php echo isset($na['prod_specification'])?$na['prod_specification']:''?>
 						</div>
 					</div>
 					<div class="col-md-3 product-grids">
 						<div class="product-price">
 							<div class="pp">
-								<a href=""><i class="fa fa-inr" aria-hidden="true">26,032</i></a>
+								<a href=""><i class="fa fa-inr" aria-hidden="true"><?php echo isset($na['prod_price'])?$na['prod_price']:''?></i></a>
 							</div>
 							<h6>
 								<del>
@@ -86,10 +88,10 @@
 					<div class="clearfix"> </div>
 
 				</div>
-
-				<div class="products-row" style="height: 290px;">
+                <?php }?>
+				<!-- <div class="products-row" style="height: 290px;">
 					<div class="col-md-3 product-grids"> 
-						<!-- <button type="button" class="btn btn-primary">On OFfer</button> -->
+						
 						<h5 style="background: #00796B;width: 60px;padding: 3px 2px 2px 2px;color: #fff;z-index: 2;">On Offer</h5>
 						<div class="agile-products" style="height: 215px;">	
 							<a href="single.php"><img src="assets/images/product6.jpg" class="img-responsive" alt="img" style="height: 200px;"></a>
@@ -98,18 +100,12 @@
 	
 					<div class="col-md-5 product-grids">
 						<div class="product-spec">
-							<h4><a href="">Apple Iphone 6(Space Gray)</a></h4>
+							<h4><a href="">Apple Iphone 6(Space Gray1)</a></h4>
 							<div class="star">
 								 <button type="button" class="btn btn-primary" style="padding: 0 !important;margin-top: 5px;">4.4 &nbsp;<i class="fa fa-star" aria-hidden="true"></i></button>&nbsp;<p style="padding-left: 50px;padding-top: -11px;margin-top: -19px;font-size: 11px;font-weight: bold;">29440 Ratings & 4031 Reviews</p>
 							</div>
 
-							<!-- <fieldset class="rating">
-						    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
-						    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
-						    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
-						    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
-						    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
-						</fieldset> -->
+							
 							<ul style="padding-left: 17px;padding-top: 6px;">
 								<li><a href="">32 GB ROM</a></li>
 								<li><a href="">4.7 inch Ratina inch Display</a></li>
@@ -146,7 +142,7 @@
 
 				<div class="products-row" style="height: 290px;">
 					<div class="col-md-3 product-grids"> 
-						<!-- <button type="button" class="btn btn-primary">On OFfer</button> -->
+						
 						<h5 style="background: #00796B;width: 60px;padding: 3px 2px 2px 2px;color: #fff;z-index: 2;">On Offer</h5>
 						<div class="agile-products" style="height: 215px;">	
 							<a href="single.php"><img src="assets/images/product6.jpg" class="img-responsive" alt="img" style="height: 200px;"></a>
@@ -160,13 +156,7 @@
 								 <button type="button" class="btn btn-primary" style="padding: 0 !important;margin-top: 5px;">4.4 &nbsp;<i class="fa fa-star" aria-hidden="true"></i></button>&nbsp;<p style="padding-left: 50px;padding-top: -11px;margin-top: -19px;font-size: 11px;font-weight: bold;">29440 Ratings & 4031 Reviews</p>
 							</div>
 
-							<!-- <fieldset class="rating">
-						    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="Rocks!">5 stars</label>
-						    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="Pretty good">4 stars</label>
-						    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="Meh">3 stars</label>
-						    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Kinda bad">2 stars</label>
-						    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Sucks big time">1 star</label>
-						</fieldset> -->
+							
 							<ul style="padding-left: 17px;padding-top: 6px;list-style: none !important;">
 								<li><a href="">32 GB ROM</a></li>
 								<li><a href="">4.7 inch Ratina inch Display</a></li>
@@ -199,15 +189,8 @@
 					 
 					<div class="clearfix"> </div>
 
-				</div>
-				<!-- add-products --> 
-				<!-- <div class="_winkls-add-grids _winkagile-add-products">
-					<a href="#"> 
-						<h4>TOP 10 TRENDS FOR YOU FLAT <span>20%</span> OFF</h4>
-						<h6>Shop now <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></h6>
-					</a>
-				</div>  -->
-				<!-- //add-products -->
+				</div> -->
+				
 			</div>
 			<div class="col-md-3 rsidebar">
 				<h1 style="text-align: center;"><strong>IPhone</strong></h1>
@@ -217,16 +200,7 @@
 						<h6>Checkout all the offers here</h6> <br>						<h3 class="h3">Filters</h3>
 						
 						
-						<!-- <h4>Filter By Price</h4>            
-						<div class="row row1 scroll-pane">
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>0 - Rs. 100 </label>
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs. 100 - Rs. 200 </label> 
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs. 200 - Rs. 250  </label> 
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs. 250 - Rs. 300 </label> 
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs. 350 - Rs. 400 </label> 
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Rs. 450 - Rs. 500  </label> 
-							<label class="checkbox"><input type="checkbox" name="checkbox"><i></i>More</label> 
-						</div> --> 
+						
 					</div>
 					<div class="sidebar-row">
 						<h5>Categories</h5>
