@@ -820,6 +820,27 @@ public function deletefaq($value='')
         }
         return mysqli_query(GFHConfig::$link, $sql);
     }
+    //row 1
+    public function getrow1($row1_id = "")
+    {
+        $sql = "select * from row1 ";
+        if (isset($row1_id) && !empty($row1_id)) {
+            $sql .= " where row1_id='$row1_id'";
+        } else {
+            $sql .= "where status='1'";
+        }
+        return mysqli_query(GFHConfig::$link, $sql);
+    }
+    public function getrow2($row2_id = "")
+    {
+        $sql = "select * from row2 ";
+        if (isset($row2_id) && !empty($row2_id)) {
+            $sql .= " where row2_id='$row2_id'";
+        } else {
+            $sql .= "where status='1'";
+        }
+        return mysqli_query(GFHConfig::$link, $sql);
+    }
     //service
     public function getservice($service_id = "")
     {
@@ -900,7 +921,172 @@ public function deletefaq($value='')
             }
         }
     }
+//row1
+    public function row1($row1_id = '')
+    {
+        if (!empty($_POST['status'])) {
 
+            $name = isset($_POST['name']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['name']) : '';
+            $description = isset($_POST['description']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['description']) : '';
+            $price = isset($_POST['price']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['price']) : '';
+            $url = isset($_POST['url']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['url']) : '';
+            $status = $_POST['status'];
+            if (!empty($row1_id)) {
+                $allowedExts = array("jpg", "jpeg", "gif", "png");
+                $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                if ($_FILES['image']['name'] != "") {
+                    if (in_array($extension, $allowedExts)) {
+                        $date = new DateTime();
+                        $timestamp = $date->format('U');
+                        $img = $timestamp . "." . $extension;
+                        $na = mysqli_fetch_array($this->getrow1($row1_id));
+                        unlink("../images/row1/" . $na['image']);
+
+
+                        $sql = "UPDATE `row1` SET `headline`='$name', `description`='$description',`url`='$url', `price`='$price', `image`='$img',`status`='$status' WHERE `row1_id`='$row1_id'";
+                        $result = mysqli_query(GFHConfig::$link, $sql);
+                        if ($result) {
+                            echo "<script>window.location='manage-row1.php?msg=Updated successfully';</script>";
+                        } else {
+                            echo "<script>window.location='manage-row1.php?msg=Not Updated';</script>";
+                        }
+                        move_uploaded_file($_FILES['image']['tmp_name'], "../images/row1/" . $img);
+                    }
+                } else {
+                    $sql = "UPDATE `row1` SET `headline`='$name', `description`='$description',`url`='$url', `price`='$price', `status`='$status' WHERE `row1_id`='$row1_id'";
+                    $result = mysqli_query(GFHConfig::$link, $sql);
+                    if ($result) {
+                        echo "<script>window.location='manage-row1.php?msg=Updated successfully';</script>";
+                    } else {
+                        echo "<script>window.location='manage-row1.php?msg=Not Updated';</script>";
+                    }
+                }
+            } else {
+                $allowedExts = array("jpg", "jpeg", "gif", "png");
+                $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+
+                if ($_FILES['image']['name'] != "") {
+                    if (in_array($extension, $allowedExts)) {
+                        $date = new DateTime();
+                        $timestamp = $date->format('U');
+                        $img = $timestamp . "." . $extension;
+                        $sql = "INSERT INTO `row1`(`headline`, `description`, `url`, `price`,`status`,`image`) VALUES('$name','$description','$url','$price','$status','$img')";
+                        $result = mysqli_query(GFHConfig::$link, $sql);
+                        if (!$result) {
+                            printf("Error: %s\n", mysqli_error(GFHConfig::$link));
+                            exit();
+                        }
+                        move_uploaded_file($_FILES['image']['tmp_name'], "../images/row1/" . $img);
+                        if ($result) {
+                            echo "<script>window.location='manage-row1.php?msg=Added successfully';</script>";
+                        } else {
+                            echo "<script>window.location='manage-row1.php?msg=Not Updated';</script>";
+
+                        }
+                    }
+
+
+                }
+            }
+        }
+    }
+    //row2
+    public function row2($row2_id = '')
+    {
+        if (!empty($_POST['status'])) {
+
+            $name = isset($_POST['name']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['name']) : '';
+            $description = isset($_POST['description']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['description']) : '';
+            $price = isset($_POST['price']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['price']) : '';
+            $url = isset($_POST['url']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['url']) : '';
+            $status = $_POST['status'];
+            if (!empty($row2_id)) {
+                $allowedExts = array("jpg", "jpeg", "gif", "png");
+                $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                if ($_FILES['image']['name'] != "") {
+                    if (in_array($extension, $allowedExts)) {
+                        $date = new DateTime();
+                        $timestamp = $date->format('U');
+                        $img = $timestamp . "." . $extension;
+                        $na = mysqli_fetch_array($this->getrow1($row1_id));
+                        unlink("../images/row2/" . $na['image']);
+
+
+                        $sql = "UPDATE `row2` SET `headline`='$name', `description`='$description',`url`='$url', `price`='$price', `image`='$img',`status`='$status' WHERE `row2_id`='$row2_id'";
+                        $result = mysqli_query(GFHConfig::$link, $sql);
+                        if ($result) {
+                            echo "<script>window.location='manage-row2.php?msg=Updated successfully';</script>";
+                        } else {
+                            echo "<script>window.location='manage-row2.php?msg=Not Updated';</script>";
+                        }
+                        move_uploaded_file($_FILES['image']['tmp_name'], "../images/row2/" . $img);
+                    }
+                } else {
+                    $sql = "UPDATE `row2` SET `headline`='$name', `description`='$description',`url`='$url', `price`='$price', `status`='$status' WHERE `row2_id`='$row2_id'";
+                    $result = mysqli_query(GFHConfig::$link, $sql);
+                    if ($result) {
+                        echo "<script>window.location='manage-row2.php?msg=Updated successfully';</script>";
+                    } else {
+                        echo "<script>window.location='manage-row2.php?msg=Not Updated';</script>";
+                    }
+                }
+            } else {
+                $allowedExts = array("jpg", "jpeg", "gif", "png");
+                $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+
+                if ($_FILES['image']['name'] != "") {
+                    if (in_array($extension, $allowedExts)) {
+                        $date = new DateTime();
+                        $timestamp = $date->format('U');
+                        $img = $timestamp . "." . $extension;
+                        $sql = "INSERT INTO `row2`(`headline`, `description`, `url`, `price`,`status`,`image`) VALUES('$name','$description','$url','$price','$status','$img')";
+                        $result = mysqli_query(GFHConfig::$link, $sql);
+                        if (!$result) {
+                            printf("Error: %s\n", mysqli_error(GFHConfig::$link));
+                            exit();
+                        }
+                        move_uploaded_file($_FILES['image']['tmp_name'], "../images/row2/" . $img);
+                        if ($result) {
+                            echo "<script>window.location='manage-row2.php?msg=Added successfully';</script>";
+                        } else {
+                            echo "<script>window.location='manage-row2.php?msg=Not Updated';</script>";
+
+                        }
+                    }
+
+
+                }
+            }
+        }
+    }
+    public function deleterow1($row1_id = '')
+    {
+        $sql1 = $this->getrow1($row1_id);
+        $na = mysqli_fetch_array($sql1);
+        unlink("../images/row1/" . $na['image']);
+
+        $sql = mysqli_query(GFHConfig::$link, "DELETE FROM `row1` WHERE `row1_id`='$row1_id'");
+        if ($sql) {
+            echo "<script>window.location='manage-row1.php?msg=Deleted successfully';</script>";
+        } else {
+            echo "<script>window.location='manage-row1.php?msg=Error While Deleting';</script>";
+
+        }
+    }
+    public function deleterow2($row2_id = '')
+    {
+        $sql1 = $this->getrow2($row2_id);
+        $na = mysqli_fetch_array($sql1);
+        unlink("../images/row2/" . $na['image']);
+
+        $sql = mysqli_query(GFHConfig::$link, "DELETE FROM `row2` WHERE `row2_id`='$row2_id'");
+        if ($sql) {
+            echo "<script>window.location='manage-row2.php?msg=Deleted successfully';</script>";
+        } else {
+            echo "<script>window.location='manage-row2.php?msg=Error While Deleting';</script>";
+
+        }
+    }
     public function deletebanner($banner_id = '')
     {
         $sql1 = $this->getbanner($banner_id);
@@ -912,6 +1098,20 @@ public function deletefaq($value='')
             echo "<script>window.location='manage-banner.php?msg=Deleted successfully';</script>";
         } else {
             echo "<script>window.location='manage-banner.php?msg=Error While Deleting';</script>";
+
+        }
+    }
+     public function deleteservice($service_id = '')
+    {
+        $sql1 = $this->getservice($service_id);
+        $na = mysqli_fetch_array($sql1);
+        unlink("../images/service/" . $na['image']);
+
+        $sql = mysqli_query(GFHConfig::$link, "DELETE FROM `service` WHERE `service_id`='$service_id'");
+        if ($sql) {
+            echo "<script>window.location='manage-services.php?msg=Deleted successfully';</script>";
+        } else {
+            echo "<script>window.location='manage-services.php?msg=Error While Deleting';</script>";
 
         }
     }

@@ -80,7 +80,7 @@ $na=mysqli_fetch_array($sql);
 						<div class="single-rating">
 							<ul>
 								<div class="stars starrr" data-rating="0" style="display: inline-block;"></div>
-								<li class="rating"><a class="collapsed pa_italic" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><?php $re=$GFH_Admin->get_reviewbyproduct($_GET['product']);
+								<li class="rating"><a class="collapsed pa_italic" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><?php $re=$GFH_Admin->get_reviewbyproduct($_GET['topproduct']);
 							echo mysqli_num_rows($re); ?> reviews</a></li>
 								<li><a <?php if(!empty($_SESSION['client_id'])){ echo 'href="#reviews-anchor" id="open-review-box"';} ?>>Add your review</a></li>
 							</ul> 

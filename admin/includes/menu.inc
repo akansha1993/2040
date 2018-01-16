@@ -89,6 +89,17 @@
                     </li>
                     <li class="gui-folder">
                         <a>
+                            <div class="gui-icon"><i class="fa fa-database"></i></div>
+                            <span class="title"> Bottom Rows </span>
+                        </a>
+                        <ul style="">
+                            <li class="gui-folder">
+                            <li><a href="manage-row1.php"><span class="title">Manage Row1</span></a></li>
+                            <li><a href="manage-row2.php"><span class="title">Manage Row2</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="gui-folder">
+                        <a>
                             <div class="gui-icon"><i class="fa fa-archive"></i></div>
                             <span class="title">Inventory</span>
                         </a>

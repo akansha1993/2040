@@ -51,7 +51,7 @@ $sql=$GFH_Admin->gettopproductrandom(10);
 						<!-- <button type="button" class="btn btn-primary">On OFfer</button> -->
 						<h5 style="background: #00796B;width: 60px;padding: 3px 2px 2px 2px;color: #fff;z-index: 2;">On Offer</h5>
 						<div class="agile-products" style="height: 215px;">	
-							<a href="single.php"><img src="assets/images/product6.jpg" class="img-responsive" alt="img" style="height: 200px;"></a>
+							<a href="single.php"><img src="images/topproduct/<?php echo isset($na[''])?>" class="img-responsive" alt="img" style="height: 200px;"></a>
 						</div>  
 					</div> 	
 	

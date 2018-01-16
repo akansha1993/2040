@@ -171,15 +171,15 @@ while ($na=mysqli_fetch_array($sql)) {?>
          }); 
       </script>
       <div id="owl-demo4" class="owl-carousel">
-         <?php $top=$GFH_Admin->getrendomproduct(10);
+         <?php $top=$GFH_Admin->getrow1();
                               while($na=mysqli_fetch_array($top)){?>
                               
                               <div class="item">
-                                 <img class="img-responsive" src="<?php echo url('images/product/'.$na['thumb']); ?>" alt="img">
-                                 <p><?php echo $na['prod_name'];?></p>
-                                 <div class="price"><i class="fa fa-inr"></i><?php echo $na['prod_price'];?> </div>
+                                 <img class="img-responsive" src="<?php echo url('images/row1/'.$na['image']); ?>" alt="img">
+                                 <p><?php echo $na['headline'];?></p>
+                                 <div class="price"><i class="fa fa-inr"></i><?php echo $na['price'];?> </div>
                                  <div class="overlay">
-                                    <div class="button"><a class="view-button" href="<?php echo url('product-overview.php?product='.$na['prod_id']);?>">View</a></div>
+                                    <div class="button"><a class="view-button" href="<?php echo isset($na['url'])?$na['url']:'';?>">View</a></div>
                                  </div>
                               </div>
                               <?php } ?>
@@ -204,15 +204,15 @@ while ($na=mysqli_fetch_array($sql)) {?>
          }); 
       </script>
       <div id="owl-demo5" class="5owl-demo owl-carousel">
-            <?php $top=$GFH_Admin->getrendomproduct(10);
+            <?php $top=$GFH_Admin->getrow2();
                               while($na=mysqli_fetch_array($top)){?>
                               
                               <div class="item">
-                                 <img class="img-responsive" src="<?php echo url('images/product/'.$na['thumb']); ?>" alt="img">
-                                 <p><?php echo $na['prod_name'];?></p>
-                                 <div class="price"><i class="fa fa-inr"></i><?php echo $na['prod_price'];?> </div>
+                                 <img class="img-responsive" src="<?php echo url('images/row2/'.$na['image']); ?>" alt="img">
+                                 <p><?php echo $na['headline'];?></p>
+                                 <div class="price"><i class="fa fa-inr"></i><?php echo $na['price'];?> </div>
                                  <div class="overlay">
-                                    <div class="button"><a class="view-button" href="<?php echo url('product-overview.php?product='.$na['prod_id']);?>">View</a></div>
+                                    <div class="button"><a class="view-button" href="<?php echo isset($na['url'])?$na['url']:'';?>">View</a></div>
                                  </div>
                               </div>
                               <?php } ?>

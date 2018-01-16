@@ -34,11 +34,11 @@ require_once('includes/function.php');
     <!--end .offcanvas-->
     <!-- END OFFCANVAS LEFT -->
 <?php if(isset($_POST['status'])){
-    $GFH_Admin->service(isset($_GET['q'])?$_GET['q']:'');
+    $GFH_Admin->row1(isset($_GET['q'])?$_GET['q']:'');
 }
 if(isset($_GET['delete']))
 {
-    $GFH_Admin->deleteservice($_GET['delete']);
+    $GFH_Admin->deleterow1($_GET['delete']);
 }?>
     <!-- BEGIN CONTENT-->
     <div id="content">
@@ -50,11 +50,11 @@ if(isset($_GET['delete']))
                         <div class="card card-underline">
                             <div class="card-head">
                                 <ul class="nav nav-tabs pull-right" data-toggle="tabs">
-                                    <li class=" <?php if(empty($_GET['q'])){ echo 'active';}?>"><a href="#first2">Services</a></li>
-                                    <li class="<?php if(!empty($_GET['q'])){ echo 'active';}?>"><a href="#second2"><?php if(empty($_GET['q'])){ echo'Add Service';} else{echo'Edit Service';}?> </a></li>
+                                    <li class=" <?php if(empty($_GET['q'])){ echo 'active';}?>"><a href="#first2">Row1</a></li>
+                                    <li class="<?php if(!empty($_GET['q'])){ echo 'active';}?>"><a href="#second2"><?php if(empty($_GET['q'])){ echo'Add Product Row1';} else{echo'Edit ProductRow1';}?> </a></li>
 
                                 </ul>
-                                <header><?php if(empty($_GET['q'])){ echo'Add Service';} else{echo'Edit Service';}?> </header>
+                                <header><?php if(empty($_GET['q'])){ echo'Add Product Row1';} else{echo'Edit Product Row1';}?> </header>
                             </div>
                             <div class="card-body tab-content">
                                 <div class="tab-pane <?php if(empty($_GET['q'])){ echo 'active';}?>" id="first2">
@@ -65,6 +65,8 @@ if(isset($_GET['delete']))
                                             <th>Sort</th>
 
                                             <th>Title</th>
+                                            <th>Url</th>
+                                            <th>Price</th>
                                             <th>Status</th>
                                             <th>Image</th>
                                             <th>Created On</th>
@@ -73,25 +75,27 @@ if(isset($_GET['delete']))
                                         </thead>
                                         <tbody>
                                         <?php $i=1;
-                                        $sql= $GFH_Admin->getservice();
+                                        $sql= $GFH_Admin->getrow1();
                                        while( $na=mysqli_fetch_array($sql)){?>
                                         <tr class="gradeX">
                                             <td><?php echo $i;?></td>
                                             <td><?php echo $na['headline'];?></td>
+                                            <td><?php echo $na['url'];?></td>
+                                            <td><?php echo $na['price'];?></td>
                                             <td><?php if($na['status']=='1'){echo 'Active';}else{
                                             echo "Inactive";
                                                 }?></td>
                                             
-                                            <td><img style="width:50px;" src="../images/service/<?php echo $na['image'];?>"></td>
+                                            <td><img style="width:50px;" src="../images/row1/<?php echo $na['image'];?>"></td>
                                             <td><?php echo date("d-m-Y",$na['image']);?></td>
                                             <td>
                                                 <div class="btn-group">
                                                     <button type="button" class="btn ink-reaction btn-flat  btn-primary" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-chevron-down"></i> Action </button>
                                                     <ul class="dropdown-menu no-padding" role="menu">
-                                                        <li><a href="<?php $_SERVER['PHP_SELF'];?>?q=<?php echo $na['service_id'];?>" class="btn  ink-reaction btn-flat btn-warning"><i class="fa fa-edit"></i> Edit
+                                                        <li><a href="<?php $_SERVER['PHP_SELF'];?>?q=<?php echo $na['row1_id'];?>" class="btn  ink-reaction btn-flat btn-warning"><i class="fa fa-edit"></i> Edit
                                                             </a></li>
                                                         <li class="divider"></li>
-                                                        <li><a href="<?php $_SERVER['PHP_SELF'];?>?delete=<?php echo $na['service_id'];?>" class="btn  ink-reaction btn-flat btn-danger"><i class="fa fa-remove"> </i> Delete
+                                                        <li><a href="<?php $_SERVER['PHP_SELF'];?>?delete=<?php echo $na['row1_id'];?>" class="btn  ink-reaction btn-flat btn-danger"><i class="fa fa-remove"> </i> Delete
                                                             </a></li>
 
                                                     </ul>
@@ -107,20 +111,35 @@ if(isset($_GET['delete']))
                                 <div class="tab-pane <?php if(!empty($_GET['q'])){ echo 'active';}?>" id="second2">
                                     <form method="post" class="form form-validate floating-label" enctype="multipart/form-data">
                                         <?php if(isset($_GET['q'])){
-                                            $sl=$GFH_Admin->getservice($_GET['q']);
+                                            $sl=$GFH_Admin->getrow1($_GET['q']);
                                             $naa=mysqli_fetch_array($sl);
                                         }?>
                                         <div class="row">
-                                       <div class="col-md-12">
+                                       <div class="col-md-7">
                                            <div class="form-group">
                                                <input type="text" class="form-control" id="Email1" value="<?php echo isset($naa['headline'])?$naa['headline']:'';?>" name="name"
                                                       >
                                                <label for="Email1">Healine </label>
                                            </div>
                                        </div>
-                                            
+                                            <div class="col-md-5">
+                                           <div class="form-group">
+                                               <input type="text" class="form-control" id="Email1" value="<?php echo isset($naa['url'])?$naa['url']:'';?>" name="url">
+                                               <label for="Email1">Url </label>
+                                           </div>
+                                            </div>
 
                                            <div class="col-md-3">
+                                               
+                                                   <div class="form-group" >
+                                                       
+                                                           <input type="text" name="price"  value="<?php echo isset($naa['price'])?$naa['price']:'';?>" class="form-control">
+                                                           <label>Price</label>
+                                                       
+                                                       
+                                                  
+                                               </div><!--end .form-group -->
+                                           </div><div class="col-md-3">
                                                <div class="form-group">
                                                    <select id="select1" name="status" class="form-control" required=""
                                                            aria-required="true">
@@ -138,7 +157,7 @@ if(isset($_GET['delete']))
     opacity: 0;
     overflow: hidden;
     position: absolute;
-    z-index: -1;" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected"  />
+    z-index: -1;" id="file-1" class="inputfile inputfile-1" data-multiple-description="{count} files selected"  />
                                                        <label style="
     color: #f1e5e6;
     background-color: #d3394c;" for="file-1"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg> <span>Choose a file…</span></label>
@@ -146,8 +165,8 @@ if(isset($_GET['delete']))
                                                </div>
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    	<textarea id="summernote" name="caption" class="form-control control-12-rows"
-                                                                  placeholder="Enter text ..."><?php echo isset($naa['caption'])?$naa['caption']:''?></textarea>
+                                                    	<textarea id="summernote" name="description" class="form-control control-12-rows"
+                                                                  placeholder="Enter text ..."><?php echo isset($naa['description'])?$naa['description']:''?></textarea>
 
                                                 </div>
                                             </div>
