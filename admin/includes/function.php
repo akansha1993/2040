@@ -1897,7 +1897,10 @@ VALUES('$category_id','$subcategory_id','$discount_id','$name','$prod_price','$p
         return mysqli_query(GFHConfig::$link, $sql);
     }
 
-
+    public function getsize($sizeid) {
+        $sql = "SELECT * FROM `size` WHERE `categoey_id` = '" .$sizeid. "';";
+        return mysqli_query(GFHConfig::$link, $sql);
+    }
     public function getproduct_by_cate($discount = "")
     {
         $sql = "select * from product ";

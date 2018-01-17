@@ -62,16 +62,18 @@ $na=mysqli_fetch_array($sql);
     <input type='button' value='-' class='qtyminus btn btn-danger' field='quantity' />
     <input type='text' class="form-control" name='quantity' id="prod_quantity" value='1' class='qty' />
     <input type='button' value='+' class='qtyplus btn btn-primary' field='quantity' />
-</form>
+</form>				<?php
+$size = $GFH_Admin->getsize($na['size_id']);
+if(mysqli_num_rows($size) > 0) {?>
 					<div class="sidebar-row">
 						<h5 class="row_size1">Size</h5>
 						<div class="row row_size">
-							<label class="checkbox"><input type="radio" name="size" value="1"><i></i>S</label>
-							<label class="checkbox"><input type="radio" name="size" value="2"><i></i>M</label>
-							<label class="checkbox"><input type="radio" name="size" value="3"><i></i>XL</label>
+							<?php while($size_ = mysqli_fetch_assoc($size)) {?>
+							<label class="checkbox"><input type="radio" name="size" value="<?php echo $size_['size_id']; ?>"><i></i><?php echo $size_['name']; ?>[<?php echo $size_['size']; ?>]</label>
+							<?php } ?>
 						</div>
 					</div>
-							
+					<?php } ?>	
 
 						</div> 
 						<div class="single-rating">
