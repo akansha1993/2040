@@ -63,8 +63,8 @@ $na=mysqli_fetch_array($sql);
     <input type='text' class="form-control" name='quantity' id="prod_quantity" value='1' class='qty' />
     <input type='button' value='+' class='qtyplus btn btn-primary' field='quantity' />
 </form>				<?php
-$size = $GFH_Admin->getsize($na['size_id']);
-if(mysqli_num_rows($size) > 0) {?>
+					$size = $GFH_Admin->getsize($na['size_id']);
+					if(mysqli_num_rows($size) > 0) {?>
 					<div class="sidebar-row">
 						<h5 class="row_size1">Size</h5>
 						<div class="row row_size">

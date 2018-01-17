@@ -66,14 +66,18 @@ $na=mysqli_fetch_array($sql);
     <input type='text' class="form-control" name='quantity' id="prod_quantity" value='1' class='qty' />
     <input type='button' value='+' class='qtyplus btn btn-primary' field='quantity' />
 </form>
+					<?php
+					$size = $GFH_Admin->getsize($na['size_id']);
+					if(mysqli_num_rows($size) > 0) {?>
 					<div class="sidebar-row">
 						<h5 class="row_size1">Size</h5>
 						<div class="row row_size">
-							<label class="checkbox"><input type="radio" name="size" value="1"><i></i>S</label>
-							<label class="checkbox"><input type="radio" name="size" value="2"><i></i>M</label>
-							<label class="checkbox"><input type="radio" name="size" value="3"><i></i>XL</label>
+							<?php while($size_ = mysqli_fetch_assoc($size)) {?>
+							<label class="checkbox"><input type="radio" name="size" value="<?php echo $size_['size_id']; ?>"><i></i><?php echo $size_['name']; ?>[<?php echo $size_['size']; ?>]</label>
+							<?php } ?>
 						</div>
 					</div>
+					<?php } ?>
 							
 
 						</div> 
@@ -282,14 +286,22 @@ $na=mysqli_fetch_array($sql);
 	</div>
 	<!-- //footer-top -->  
 	<!-- subscribe -->
-<script>
-	 function addtocart(pid) {
-	 	var quantity=document.getElementByID('prod_quantity').value;
+	<script>
+	 function addtocart(pid, bool = false) {
+		 var quantity=document.getElementById('prod_quantity').value;
+		 var size_ele = document.querySelector('input[name = "size"]:checked');
+		 var size = 0;
+		 if(size_ele != undefined){
+			 size = size_ele.value;
+		 }
 	 	       $.ajax({
                 type: 'post',
                 url: 'updatecart.php',
-                data: {cart: pid,quantity: quantity},
+                data: {cart: pid,quantity: quantity, size: size},
                 success: function (result) {
+					if(bool)
+					location.href='cart.php';
+					else
                 	$("#cart_count").html(result);
                 }
             });
