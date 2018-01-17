@@ -670,7 +670,99 @@ public function deletefaq($value='')
             }
         }
     }
+    public function getServiceCategory($catid = "")
+    {
+        $sql = "select * from service_category ";
+        if (isset($catid) && !empty($catid)) {
+            $sql .= " where service_cat_id='$catid'";
+        } else {
+            $sql .= " where status='1'";
+        }
+        return mysqli_query(GFHConfig::$link, $sql);
+    }
+    public function servicecategory($cat_id = '')
+    {
+        if (!empty($_POST['name'])) {
 
+            $name = isset($_POST['name']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['name']) : '';
+            $menu = isset($_POST['menu']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['menu']) : '';
+            $status = $_POST['status'];
+            if (!empty($cat_id)) {
+                $allowedExts = array("jpg", "jpeg", "gif", "png");
+                $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                if ($_FILES['image']['name'] != "") {
+                    if (in_array($extension, $allowedExts)) {
+                        $date = new DateTime();
+                        $timestamp = $date->format('U');
+                        $img = $timestamp . "." . $extension;   
+                        $na = mysqli_fetch_array(GFHConfig::$this->getServiceCategory($cat_id));
+                        unlink("../images/servicecategory/" . $na['image']);
+
+                        $sql = "UPDATE `service_category` SET `service_cat_name`='$name',`image`='$img',`status`='$status' WHERE `service_cat_id`='$cat_id'";
+                        $result = mysqli_query(GFHConfig::$link, $sql);
+                        if ($result) {
+                            echo "<script>window.location='service_category.php?msg=Updated successfully';</script>";
+                        } else {
+                            echo "<script>window.location='service_category.php?msg=Not Updated';</script>";
+                        }
+                        move_uploaded_file($_FILES['image']['tmp_name'], "../images/servicecategory/" . $img);
+                    }
+                } else {
+                    $sql = "UPDATE `service_category` SET `service_cat_name`='$name',`status`='$status' WHERE `service_cat_id`='$cat_id'";
+                    $result = mysqli_query(GFHConfig::$link, $sql);
+                    if ($result) {
+                        echo "<script>window.location='service_category.php?msg=Updated successfully';</script>";
+                    } else {
+                        echo "<script>window.location='service_category.php?msg=Not Updated';</script>";
+                    }
+                }
+            } else {
+                $check = mysqli_query(GFHConfig::$link, "select * from service_category where service_cat_name='$name'");
+                if (mysqli_num_rows($check) > 0) {
+                    echo "<script>window.location='service_category.php?error=Category name already exist';</script>";
+                } else {
+                    $allowedExts = array("jpg", "jpeg", "gif", "png");
+                    $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+
+                    if ($_FILES['image']['name'] != "") {
+                        if (in_array($extension, $allowedExts)) {
+                            $date = new DateTime();
+                            $timestamp = $date->format('U');
+                            $img = $timestamp . "." . $extension;
+                            $sql = "INSERT INTO `service_category`(`service_cat_name`,`status`, `image`) VALUES('$name','$status','$img')";
+                            $result = mysqli_query(GFHConfig::$link, $sql);
+                            if (!$result) {
+                                printf("Error: %s\n", mysqli_error(GFHConfig::$link));
+                                exit();
+                            }
+                            move_uploaded_file($_FILES['image']['tmp_name'], "../images/servicecategory/" . $img);
+                            if ($result) {
+                                echo "<script>window.location='service_category.php?msg=Added successfully';</script>";
+                            } else {
+                                echo "<script>window.location='service_category.php?msg=Not Updated';</script>";
+
+                            }
+                        }
+
+                    } else {
+                        $sql = "INSERT INTO `service_category`(`service_cat_name`,`status`) VALUES('$name','$status')";
+                        $result = mysqli_query(GFHConfig::$link, $sql);
+                        if (!$result) {
+                            printf("Error: %s\n", mysqli_error(GFHConfig::$link));
+                            exit();
+                        }
+                        if ($result) {
+                            echo "<script>window.location='service_category.php?msg=Added successfully';</script>";
+                        } else {
+                            echo "<script>window.location='service_category.php?msg=Not Updated';</script>";
+
+                        }
+                    }
+
+                }
+            }
+        }
+    }
     public function deletecategory($menuid)
     {
         $na = mysqli_fetch_array($this->getCategory($menuid));
@@ -683,10 +775,32 @@ public function deletefaq($value='')
 
         }
     }
+    public function deleteservicecategory($menuid)
+    {
+        $na = mysqli_fetch_array($this->getServiceCategory($menuid));
+
+        $sql = mysqli_query(GFHConfig::$link, "DELETE FROM `service_category` WHERE `service_cat_id`='$menuid'");
+        if ($sql) {
+            echo "<script>window.location='service_category.php?msg=Deleted successfully';</script>";
+        } else {
+            echo "<script>window.location='service_category.php?msg=Error While Deleting';</script>";
+
+        }
+    }
 
     public function getsubCategory($catid = "")
     {
         $sql = "SELECT * FROM `pro_subcategory`";
+        if (isset($catid) && !empty($catid)) {
+            $sql .= " where subcategory_id='$catid'";
+        } else {
+            $sql .= " where status='1'";
+        }
+        return mysqli_query(GFHConfig::$link, $sql);
+    }
+    public function getservicesubCategory($catid = "")
+    {
+        $sql = "SELECT * FROM `service_subcategory`";
         if (isset($catid) && !empty($catid)) {
             $sql .= " where subcategory_id='$catid'";
         } else {
@@ -706,6 +820,16 @@ public function deletefaq($value='')
         return mysqli_query(GFHConfig::$link, $sql);
     }
 
+    public function getservicesubCategory_by_servicecategory($catid = "")
+    {
+        $sql = "SELECT * FROM `service_subcategory`";
+        if (isset($catid) && !empty($catid)) {
+            $sql .= " where fk_category_id='$catid'";
+        } else {
+            $sql .= " where status='1'";
+        }
+        return mysqli_query(GFHConfig::$link, $sql);
+    }
     public function subCategory($cat_id = '')
     {
         if (!empty($_POST['name'])) {
@@ -791,6 +915,91 @@ public function deletefaq($value='')
             }
         }
     }
+    public function serviceSubCategory($cat_id = '')
+    {
+        if (!empty($_POST['name'])) {
+
+            $name = isset($_POST['name']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['name']) : '';
+            $status = $_POST['status'];
+            $service_cat_id = isset($_POST['service_cat_id']) ? mysqli_real_escape_string(GFHConfig::$link, $_POST['service_cat_id']) : '';
+            if (!empty($cat_id)) {
+                $allowedExts = array("jpg", "jpeg", "gif", "png");
+                $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                if ($_FILES['image']['name'] != "") {
+                    if (in_array($extension, $allowedExts)) {
+                        $date = new DateTime();
+                        $timestamp = $date->format('U');
+                        $img = $timestamp . "." . $extension;
+                        $na = mysqli_fetch_array($this->getservicesubCategory($cat_id));
+                        unlink("../images/servicecategory/" . $na['image']);
+
+                        $sql = "UPDATE `service_subcategory` SET `fk_category_id`='$service_cat_id', `subcategory_name`='$name',`image`='$img',`status`='$status' WHERE `subcategory_id`='$cat_id'";
+                        $result = mysqli_query(GFHConfig::$link, $sql);
+                        if ($result) {
+                            echo "<script>window.location='manage-servicesubcategory.php?msg=Updated successfully';</script>";
+                        } else {
+                            echo "<script>window.location='manage-servicesubcategory.php?msg=Not Updated';</script>";
+                        }
+                        move_uploaded_file($_FILES['image']['tmp_name'], "../images/servicecategory/" . $img);
+                    }
+                } else {
+                    $sql = "UPDATE `service_subcategory` SET `fk_category_id`='$service_cat_id', `subcategory_name`='$name',`status`='$status' WHERE `subcategory_id`='$cat_id'";
+                    $result = mysqli_query(GFHConfig::$link, $sql);
+                    if ($result) {
+                        echo "<script>window.location='manage-servicesubcategory.php?msg=Updated successfully';</script>";
+                    } else {
+                        echo "<script>window.location='manage-servicesubcategory.php?msg=Not Updated';</script>";
+                    }
+                }
+
+            } else {
+                $check = mysqli_query(GFHConfig::$link, "select * from service_subcategory where subcategory_name='$name'");
+                if (mysqli_num_rows($check) > 0) {
+                    echo "<script>window.location='manage-servicesubcategory.php?error=Category name already exist';</script>";
+                } else {
+                    $allowedExts = array("jpg", "jpeg", "gif", "png");
+                    $extension = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+
+                    if ($_FILES['image']['name'] != "") {
+                        if (in_array($extension, $allowedExts)) {
+                            $date = new DateTime();
+                            $timestamp = $date->format('U');
+                            $img = $timestamp . "." . $extension;
+                            $sql = "INSERT INTO `service_subcategory`(`fk_category_id`,`subcategory_name`,`status`, `image`) VALUES('$service_cat_id','$name','$status','$img')";
+                            $result = mysqli_query(GFHConfig::$link, $sql);
+                            if (!$result) {
+                                printf("Error: %s\n", mysqli_error(GFHConfig::$link));
+                                exit();
+                            }
+                            move_uploaded_file($_FILES['image']['tmp_name'], "../images/servicecategory/" . $img);
+                            if ($result) {
+                                echo "<script>window.location='manage-servicesubcategory.php?msg=Added successfully';</script>";
+                            } else {
+                                echo "<script>window.location='manage-servicesubcategory.php?msg=Not Updated';</script>";
+
+                            }
+                        }
+
+                    } else {
+                        
+                        $sql = "INSERT INTO `service_subcategory`(`fk_category_id`,`subcategory_name`,`status`) VALUES('$service_cat_id','$name','$status')";
+                        $result = mysqli_query(GFHConfig::$link, $sql);
+                        if (!$result) {
+                            printf("Error: %s\n", mysqli_error(GFHConfig::$link));
+                            exit();
+                        }
+                        if ($result) {
+                            echo "<script>window.location='manage-servicesubcategory.php?msg=Added successfully';</script>";
+                        } else {
+                            echo "<script>window.location='manage-servicesubcategory.php?msg=Not Updated';</script>";
+
+                        }
+                    }
+
+                }
+            }
+        }
+    }
 
     public function deletesubCategory($menuid = "")
     {
@@ -805,7 +1014,20 @@ public function deletefaq($value='')
 
         }
     }
+    
+    public function deleteservicesubCategory($menuid = "")
+    {
+        $na = mysqli_fetch_array($this->getservicesubCategory($menuid));
+        unlink("../images/servicecategory/" . $na['image']);
 
+        $sql = mysqli_query(GFHConfig::$link, "DELETE FROM `service_subcategory` WHERE `subcategory_id`='$menuid'");
+        if ($sql) {
+            echo "<script>window.location='manage-servicesubcategory.php?msg=Deleted successfully';</script>";
+        } else {
+            echo "<script>window.location='manage-servicesubcategory.php?msg=Error While Deleting';</script>";
+
+        }
+    }
     public function getcategory_by_menu($menu_id)
     {
   return mysqli_query(GFHConfig::$link,"SELECT * FROM `pro_category` WHERE `menu_id`='$menu_id'");

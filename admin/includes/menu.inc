@@ -53,6 +53,26 @@
                     </li>
                     <li class="gui-folder">
                         <a>
+                            <div class="gui-icon"><i class="md md-work"></i></div>
+                            <span class="title">Service Catalog</span>
+                        </a>
+                        <!--start submenu -->
+                        <ul style="">
+                            <li class="gui-folder">
+                            <li><a href="service_category.php"><span class="title">Manage Category</span></a></li>
+                            <li><a href="manage-servicesubcategory.php"><span class="title">Manage Subcategory</span></a></li>
+                            <li><a href="manage-product.php"><span class="title">Product</span></a></li>
+                            <li><a href="manage-top-products.php"><span class="title">Top Product</span></a></li>
+                            <li><a href="Upload-bulk-product.php"><span class="title">Upload Bulk Product</span></a></li>
+                            <li><a href="manage-brand.php"><span class="title">Brand</span></a></li>
+                             <li><a href="manage-sizecategory.php"><span class="title">Size Category</span></a></li>
+                              <li><a href="manage-size.php"><span class="title">Manage Size</span></a></li>
+
+                        </ul>
+
+                    </li>
+                    <li class="gui-folder">
+                        <a>
                             <div class="gui-icon"><i class="fa fa-archive"></i></div>
                             <span class="title">Extra</span>
                         </a>
