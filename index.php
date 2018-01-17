@@ -58,9 +58,13 @@
                </a>
             </div>
             <div class="col-md-3">
-               <img class="img-responsive" src="assets/images/adv.png" style="height: 270px;
+      <?php $sideimage2=$GFH_Admin->getsideimage(1);
+      $fetch_sideimage = mysqli_fetch_array($sideimage2);
+      ?>
+      <img class="img-responsive" src="images/sideimage/<?php echo $fetch_sideimage['image']?>" style="height: 270px;
                   margin: 0 auto;">
-            </div>
+   </div>
+            
          </div>
       </div>
       <script>
@@ -117,12 +121,14 @@ while ($na=mysqli_fetch_array($sql)) {?>
                               while($na=mysqli_fetch_array($top)){?>
                               
                               <div class="item">
+                                 <div class="thumbnail" style="margin:10px">
                                  <img class="img-responsive" src="<?php echo url('images/topproduct/'.$na['thumb']); ?>" alt="img" style="height: 150px">
                                  <p><?php echo $na['prod_name'];?></p>
                                  <div class="price"><i class="fa fa-inr"></i><?php echo $na['prod_price'];?> </div>
                                  <div class="overlay">
                                     <div class="button"><a class="view-button" href="<?php echo url('top-product-overview.php?topproduct='.$na['prod_id']);?>">View</a></div>
                                  </div>
+                              </div>
                               </div>
                               <?php } ?>
                            </div>

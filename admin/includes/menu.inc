@@ -61,7 +61,9 @@
                     <li><a href="manage-offerbanner.php"><span class="title">Manage Offer's</span></a></li>
                     <li><a href="manage-discount.php"><span class="title">Manage Discount </span></a></li>
                     <li><a href="manage-coupan.php"><span class="title">Manage Coupan </span></a></li>
-                   <li><a href="manage-review.php"><span class="title">Manage Review</span></a></li>    </ul>
+                   <li><a href="manage-review.php"><span class="title">Manage Review</span></a></li>
+                   <li><a href="manage-side-image.php"><span class="title">Manage Side Image</span></a></li>    </ul>
+                   
                     </li>
 
                     <li class="gui-folder">
