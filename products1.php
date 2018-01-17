@@ -14,7 +14,7 @@ $sql=$GFH_Admin->gettopproductrandom(10);
 			<div class="col-md-9 product-_winkls-right">
 				<!-- breadcrumbs --> 
 				<ol class="breadcrumb breadcrumb1">
-					<li><a href="index.html">Home</a></li>
+					<li><a href="index.php">Home</a></li>
 					<li class="active">Products</li>
 				</ol> 
 				<div class="clearfix"> </div>
@@ -51,7 +51,10 @@ $sql=$GFH_Admin->gettopproductrandom(10);
 						<!-- <button type="button" class="btn btn-primary">On OFfer</button> -->
 						<h5 style="background: #00796B;width: 60px;padding: 3px 2px 2px 2px;color: #fff;z-index: 2;">On Offer</h5>
 						<div class="agile-products" style="height: 215px;">	
-							<a href="single.php"><img src="images/topproduct/<?php echo isset($na[''])?>" class="img-responsive" alt="img" style="height: 200px;"></a>
+							<?php $img=explode(",", $na['product_images']);
+								
+							  ?>
+							<a href="single.php"><img src="images/topproduct/<?php echo isset($img[0])?$img[0]:''?>" class="img-responsive" alt="img" style="height: 200px;"></a>
 						</div>  
 					</div> 	
 	

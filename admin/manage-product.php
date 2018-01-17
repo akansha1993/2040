@@ -267,7 +267,7 @@ require_once('includes/function.php');
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
-                                                <input type="text" required id="fresh_price"  name="fresh_price" class="form-control">
+                                                <input type="text" required id="fresh_price"  name="fresh_price" class="form-control" value="<?php echo isset($naa['fresh_price'])?$naa['fresh_price']:'';?>">
 
                                                 <label for="select1"> Price Wiyhout GST </label>
                                             </div>

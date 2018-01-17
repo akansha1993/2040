@@ -80,7 +80,7 @@ $na=mysqli_fetch_array($sql);
 						<div class="single-rating">
 							<ul>
 								<div class="stars starrr" data-rating="0" style="display: inline-block;"></div>
-								<li class="rating"><a class="collapsed pa_italic" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><?php $re=$GFH_Admin->get_reviewbyproduct($_GET['topproduct']);
+								<li class="rating"><a class="collapsed pa_italic" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"><?php $re=$GFH_Admin->get_reviewbyproduct($_GET['topproduct'],'topproduct');
 							echo mysqli_num_rows($re); ?> reviews</a></li>
 								<li><a <?php if(!empty($_SESSION['client_id'])){ echo 'href="#reviews-anchor" id="open-review-box"';} ?>>Add your review</a></li>
 							</ul> 
@@ -89,8 +89,8 @@ $na=mysqli_fetch_array($sql);
                 <?php if(isset($_POST['review'])){ $GFH_Admin->review(); }   ?>
                     <form accept-charset="UTF-8" action="#" method="post">
                         <input id="ratings-hidden" name="rating" type="hidden">
-                        <input type="hidden" name="product_id" value="<?php echo $_GET['product'];?>">
-                         
+                        <input type="hidden" name="product_id" value="<?php echo $_GET['topproduct'];?>">
+                         <input type="hidden" name="product_type" value="topproduct">
                         <textarea class="form-control animated" cols="50" id="new-review" name="review" placeholder="Enter your review here..." rows="5"></textarea>        
                         <div class="text-right">
                         	<ul>
@@ -129,7 +129,7 @@ $na=mysqli_fetch_array($sql);
 					}); 
 				</script>
 				<div id="owl-demo5" class="owl-carousel">
-				<?php $prd=$GFH_Admin->getproduct_by($na['category_id']);
+				<?php $prd=$GFH_Admin->getproducttop_by($na['category_id']);
 				while($gh=mysqli_fetch_array($prd)){?>
 					<div class="item">
 						<div class="glry-_winkagile-grids agileits">
