@@ -136,6 +136,15 @@ class GFHAdmin extends GFHConfig
         }
     }
 
+    public function api_addtocart($productid, $quantity, $price, $size, $session) {
+        mysqli_query(GFHConfig::$link,
+        "INSERT INTO `temp_cart` (`product_id`, `quantity`, `price`, `size`, `session`)
+        VALUES ('" .$productid. "', '" .$quantity. "', '" .$price. "', '" .$size. "', '" .$session. "')");
+    }
+public function api_getcart($session) {
+    $sql=mysqli_query(GFHConfig::$link,"SELECT * FROM `temp_cart` where `session` = '" .$session. "'");
+    return mysqli_fetch_all($sql,MYSQLI_ASSOC);
+}
 public function page_by_name($value='')
 {
    $sql=mysqli_query(GFHConfig::$link,"SELECT * FROM `pages` WHERE `page_name`='$value'");
